@@ -20,6 +20,8 @@ interface Review {
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [reviewsPerPage, setReviewsPerPage] = useState(25);
 
   useEffect(() => {
     const loadReviews = async () => {
@@ -47,6 +49,23 @@ export default function ReviewsPage() {
 
   const approvedReviews = reviews;
 
+  // Pagination logic
+  const totalPages = Math.ceil(approvedReviews.length / reviewsPerPage);
+  const startIndex = (currentPage - 1) * reviewsPerPage;
+  const endIndex = startIndex + reviewsPerPage;
+  const currentReviews = approvedReviews.slice(startIndex, endIndex);
+
+  // Reset to page 1 when changing items per page
+  const handleReviewsPerPageChange = (newPerPage: number) => {
+    setReviewsPerPage(newPerPage);
+    setCurrentPage(1);
+  };
+
+  const handleReviewSubmitted = () => {
+    // Optionally reload reviews or show success message
+    console.log('Review submitted successfully');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <Navigation />
@@ -60,42 +79,103 @@ export default function ReviewsPage() {
       </section>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Reviews Display */}
-          <div className="lg:col-span-2 space-y-6">
-            {approvedReviews.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-xl text-gray-600">No reviews yet. Be the first to leave a review!</p>
-              </div>
-            ) : (
-              <>
-                {/* Average Rating */}
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Customer Satisfaction</h3>
-                    <div className="flex items-center justify-center mb-2">
-                      <div className="text-4xl font-bold text-green-700">
-                        {approvedReviews.length > 0 ? (approvedReviews.reduce((acc, review) => acc + review.rating, 0) / approvedReviews.length).toFixed(1) : '0.0'}
-                      </div>
-                      <div className="ml-2">
-                        <div className="flex text-yellow-400">
-                          {[...Array(5)].map((_, i) => {
-                            const avgRating = approvedReviews.reduce((acc, review) => acc + review.rating, 0) / approvedReviews.length;
-                            return (
-                              <svg key={i} className={`w-6 h-6 ${i < Math.floor(avgRating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                              </svg>
-                            );
-                          })}
-                        </div>
-                        <p className="text-sm text-gray-600">Based on {approvedReviews.length} reviews</p>
-                      </div>
+        {/* Review Form Section - Always at top */}
+        <div className="mb-12">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Share Your Experience</h3>
+            <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+          </div>
+        </div>
+
+        {/* Reviews Display Section */}
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-xl text-gray-600">Loading reviews...</p>
+          </div>
+        ) : approvedReviews.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-xl text-gray-600">No reviews yet. Be the first to leave a review above!</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Average Rating */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Customer Satisfaction</h3>
+                <div className="flex items-center justify-center mb-2">
+                  <div className="text-4xl font-bold text-green-700">
+                    {approvedReviews.length > 0 ? (approvedReviews.reduce((acc, review) => acc + review.rating, 0) / approvedReviews.length).toFixed(1) : '0.0'}
+                  </div>
+                  <div className="ml-2">
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => {
+                        const avgRating = approvedReviews.reduce((acc, review) => acc + review.rating, 0) / approvedReviews.length;
+                        return (
+                          <svg key={i} className={`w-6 h-6 ${i < Math.floor(avgRating) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        );
+                      })}
                     </div>
+                    <p className="text-sm text-gray-600">Based on {approvedReviews.length} reviews</p>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Individual Reviews */}
-                {approvedReviews.map((review) => (
+            {/* Pagination Controls */}
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="reviewsPerPage" className="text-sm font-medium text-gray-700">
+                    Reviews per page:
+                  </label>
+                  <select
+                    id="reviewsPerPage"
+                    value={reviewsPerPage}
+                    onChange={(e) => handleReviewsPerPageChange(Number(e.target.value))}
+                    className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  >
+                    <option value={10}>10</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                  </select>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">
+                    Showing {startIndex + 1}-{Math.min(endIndex, approvedReviews.length)} of {approvedReviews.length} reviews
+                  </span>
+                </div>
+
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-sm font-medium">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Individual Reviews - Current Page Only */}
+            <div className="space-y-6">
+              {currentReviews.map((review) => (
                   <div key={review.id} className="bg-white rounded-lg shadow-md p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div>
@@ -153,15 +233,9 @@ export default function ReviewsPage() {
                     )}
                   </div>
                 ))}
-              </>
-            )}
+            </div>
           </div>
-
-          {/* Review Form */}
-          <div className="lg:col-span-1">
-            <ReviewForm />
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Bottom CTA */}

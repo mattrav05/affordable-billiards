@@ -5,7 +5,11 @@ import { Upload, X } from 'lucide-react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/firebase';
 
-export default function ReviewForm() {
+interface ReviewFormProps {
+  onReviewSubmitted?: () => void;
+}
+
+export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
   const [formData, setFormData] = useState({
     customerName: '',
     email: '',
@@ -94,6 +98,7 @@ export default function ReviewForm() {
 
       if (response.ok) {
         setIsSubmitted(true);
+        onReviewSubmitted?.();
       } else {
         const error = await response.json();
         throw new Error(error.error || 'Failed to submit review');
