@@ -79,25 +79,28 @@ export default function ReviewsPage() {
       </section>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Review Form Section - Always at top */}
-        <div className="mb-12">
+        {/* Mobile: Review Form at top */}
+        <div className="lg:hidden mb-12">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Share Your Experience</h3>
             <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
           </div>
         </div>
 
-        {/* Reviews Display Section */}
-        {loading ? (
-          <div className="text-center py-12">
-            <p className="text-xl text-gray-600">Loading reviews...</p>
-          </div>
-        ) : approvedReviews.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-xl text-gray-600">No reviews yet. Be the first to leave a review above!</p>
-          </div>
-        ) : (
-          <div className="space-y-8">
+        {/* Desktop: Two column layout, Mobile: Single column */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Reviews Display Section */}
+          <div className="lg:col-span-2">
+            {loading ? (
+              <div className="text-center py-12">
+                <p className="text-xl text-gray-600">Loading reviews...</p>
+              </div>
+            ) : approvedReviews.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-xl text-gray-600">No reviews yet. Be the first to leave a review!</p>
+              </div>
+            ) : (
+              <div className="space-y-8">
             {/* Average Rating */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="text-center">
@@ -127,14 +130,14 @@ export default function ReviewsPage() {
             <div className="bg-white rounded-lg shadow-md p-4">
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <label htmlFor="reviewsPerPage" className="text-sm font-medium text-gray-700">
+                  <label htmlFor="reviewsPerPage" className="text-sm font-medium text-gray-900">
                     Reviews per page:
                   </label>
                   <select
                     id="reviewsPerPage"
                     value={reviewsPerPage}
                     onChange={(e) => handleReviewsPerPageChange(Number(e.target.value))}
-                    className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   >
                     <option value={10}>10</option>
                     <option value={25}>25</option>
@@ -144,7 +147,7 @@ export default function ReviewsPage() {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-900 font-medium">
                     Showing {startIndex + 1}-{Math.min(endIndex, approvedReviews.length)} of {approvedReviews.length} reviews
                   </span>
                 </div>
@@ -154,17 +157,17 @@ export default function ReviewsPage() {
                     <button
                       onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                       disabled={currentPage === 1}
-                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                      className="px-3 py-1 text-sm bg-green-100 hover:bg-green-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors text-gray-900 font-medium"
                     >
                       Previous
                     </button>
-                    <span className="text-sm font-medium">
+                    <span className="text-sm font-bold text-gray-900">
                       Page {currentPage} of {totalPages}
                     </span>
                     <button
                       onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
+                      className="px-3 py-1 text-sm bg-green-100 hover:bg-green-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors text-gray-900 font-medium"
                     >
                       Next
                     </button>
@@ -233,9 +236,21 @@ export default function ReviewsPage() {
                     )}
                   </div>
                 ))}
+              </div>
+            </div>
+            )}
+          </div>
+
+          {/* Desktop: Review Form Sidebar */}
+          <div className="hidden lg:block lg:col-span-1">
+            <div className="sticky top-8">
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Share Your Experience</h3>
+                <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Bottom CTA */}
