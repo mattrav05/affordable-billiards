@@ -4,23 +4,35 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
 import { getStorage } from 'firebase-admin/storage';
 
-const serviceAccount: ServiceAccount = {
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-};
+// Check if all required environment variables are present
+const hasRequiredEnvVars = 
+  process.env.FIREBASE_PROJECT_ID &&
+  process.env.FIREBASE_CLIENT_EMAIL &&
+  process.env.FIREBASE_PRIVATE_KEY &&
+  process.env.FIREBASE_STORAGE_BUCKET;
 
-// Initialize Firebase Admin
-if (!getApps().length) {
+let adminInitialized = false;
+
+// Only initialize if environment variables are present
+if (hasRequiredEnvVars && !getApps().length) {
+  const serviceAccount: ServiceAccount = {
+    projectId: process.env.FIREBASE_PROJECT_ID!,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+  };
+
   initializeApp({
     credential: cert(serviceAccount),
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   });
+  
+  adminInitialized = true;
 }
 
-export const adminDb = getFirestore();
-export const adminAuth = getAuth();
-export const adminStorage = getStorage();
+// Export Firebase services (will be null if not initialized)
+export const adminDb = adminInitialized ? getFirestore() : null;
+export const adminAuth = adminInitialized ? getAuth() : null;
+export const adminStorage = adminInitialized ? getStorage() : null;
 
 // Helper functions for common operations
 export const isAdmin = async (email: string): Promise<boolean> => {
@@ -36,6 +48,7 @@ export const isAdmin = async (email: string): Promise<boolean> => {
 
 // Database helper functions
 export const createDocument = async (collection: string, data: any) => {
+  if (!adminDb) throw new Error('Firebase Admin not initialized');
   const docRef = adminDb.collection(collection).doc();
   await docRef.set({
     ...data,
@@ -47,6 +60,7 @@ export const createDocument = async (collection: string, data: any) => {
 };
 
 export const updateDocument = async (collection: string, id: string, data: any) => {
+  if (!adminDb) throw new Error('Firebase Admin not initialized');
   await adminDb.collection(collection).doc(id).update({
     ...data,
     updatedAt: new Date(),
@@ -54,10 +68,12 @@ export const updateDocument = async (collection: string, id: string, data: any) 
 };
 
 export const deleteDocument = async (collection: string, id: string) => {
+  if (!adminDb) throw new Error('Firebase Admin not initialized');
   await adminDb.collection(collection).doc(id).delete();
 };
 
 export const getDocument = async (collection: string, id: string) => {
+  if (!adminDb) throw new Error('Firebase Admin not initialized');
   const doc = await adminDb.collection(collection).doc(id).get();
   if (!doc.exists) return null;
   
@@ -77,6 +93,7 @@ export const getDocument = async (collection: string, id: string) => {
 };
 
 export const getCollection = async (collection: string) => {
+  if (!adminDb) return [];
   try {
     const snapshot = await adminDb.collection(collection).get();
     const docs = snapshot.docs.map(doc => {
