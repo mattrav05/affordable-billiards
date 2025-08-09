@@ -1,0 +1,22 @@
+[
+  {
+    "id": "review-001",
+    "customerName": "John Smith",
+    "email": "john@email.com",
+    "rating": 5,
+    "comment": "Outstanding service! Matt moved my pool table professionally and set it up perfectly. Highly recommend!",
+    "dateSubmitted": "2024-01-10",
+    "status": "approved",
+    "service": "Table Moving"
+  },
+  {
+    "id": "review-002",
+    "customerName": "Sarah Johnson", 
+    "email": "sarah@email.com",
+    "rating": 5,
+    "comment": "Great experience buying a used table from Affordable Billiards. Quality table at a fair price!",
+    "dateSubmitted": "2024-01-18",
+    "status": "approved",
+    "service": "Table Purchase"
+  }
+]

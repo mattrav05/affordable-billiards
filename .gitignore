@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.next/
+out/
+dist/
+
+# Environment files  
+.env*
+!.env.local.template
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.sql
+*.json
+*.js
+*.html
+*.zip
+*.tmp
+*.temp
+
+# Project docs/scripts
+FIREBASE_SETUP.md
+PROJECT_LOG.md  
+SECURITY-AUDIT-REPORT.md
+A2-HOSTING-DEPLOYMENT-GUIDE.md
+server.js
+package-production.json
+
+# IDE/Claude
+.vscode/
+.idea/
+.claude/
+
+# Keep essential files
+!package.json
+!package-lock.json
+!src/**/*.json
+!eslint.config.mjs
+!postcss.config.mjs
+!tsconfig.json  
+!next.config.ts

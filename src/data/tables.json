@@ -1,0 +1,76 @@
+[
+  {
+    "id": "table-001",
+    "name": "Classic Oak 8ft Pool Table",
+    "brand": "Brunswick",
+    "size": "8 feet",
+    "condition": "Excellent",
+    "price": 2500,
+    "originalPrice": 2500,
+    "images": ["/images/tables/brunswick-oak-1.jpg", "/images/tables/brunswick-oak-2.jpg"],
+    "description": "Beautiful solid oak Brunswick pool table in excellent condition. Recently re-felted with championship green cloth.",
+    "features": ["Solid oak construction", "Championship cloth", "Leather pockets", "Professional installation included"],
+    "status": "available",
+    "dateAdded": "2024-01-15",
+    "dateSold": null,
+    "soldPrice": null,
+    "customerInfo": null
+  },
+  {
+    "id": "table-002", 
+    "name": "Vintage Bar Size Table",
+    "brand": "Olhausen",
+    "size": "7 feet",
+    "condition": "Good",
+    "price": 1800,
+    "originalPrice": 1800,
+    "images": ["/images/tables/olhausen-bar-1.jpg"],
+    "description": "Perfect bar-size table for smaller spaces. Solid construction with minor cosmetic wear.",
+    "features": ["Bar height", "Compact size", "Solid wood frame", "Good for home use"],
+    "status": "available",
+    "dateAdded": "2024-01-20",
+    "dateSold": null,
+    "soldPrice": null,
+    "customerInfo": null
+  },
+  {
+    "id": "table-003",
+    "name": "Professional Tournament Table",
+    "brand": "Diamond",
+    "size": "9 feet",
+    "condition": "Excellent",
+    "price": 0,
+    "originalPrice": 4200,
+    "images": ["/images/tables/diamond-tournament-1.jpg"],
+    "description": "Professional grade 9-foot Diamond table. Previously used in tournament play. Slate in perfect condition.",
+    "features": ["Tournament grade", "Professional slate", "Diamond cushions", "Championship cloth"],
+    "status": "sold",
+    "dateAdded": "2024-01-05",
+    "dateSold": "2024-01-12",
+    "soldPrice": 4200,
+    "customerInfo": {
+      "name": "Mike's Sports Bar",
+      "location": "Detroit, MI"
+    }
+  },
+  {
+    "id": "table-004",
+    "name": "Family Room Special",
+    "brand": "American Heritage",
+    "size": "8 feet",
+    "condition": "Good",
+    "price": 0,
+    "originalPrice": 1500,
+    "images": ["/images/tables/american-heritage-1.jpg"],
+    "description": "Perfect family table with solid construction. Great for recreational play.",
+    "features": ["Family friendly", "Solid construction", "Easy maintenance", "Good value"],
+    "status": "sold",
+    "dateAdded": "2024-01-08",
+    "dateSold": "2024-01-18",
+    "soldPrice": 1500,
+    "customerInfo": {
+      "name": "Johnson Family",
+      "location": "Grand Rapids, MI"
+    }
+  }
+]

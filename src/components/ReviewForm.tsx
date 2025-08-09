@@ -1,0 +1,306 @@
+'use client';
+
+import { useState } from 'react';
+import { Upload, X } from 'lucide-react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '@/lib/firebase';
+
+export default function ReviewForm() {
+  const [formData, setFormData] = useState({
+    customerName: '',
+    email: '',
+    rating: 5,
+    service: '',
+    comment: '',
+    images: [] as string[]
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [uploadingImages, setUploadingImages] = useState(false);
+
+  const services = [
+    'Table Moving',
+    'Table Installation',
+    'Table Purchase',
+    'Table Repair',
+    'General Service'
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'rating' ? parseInt(value) : value
+    }));
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    setUploadingImages(true);
+    const newImages: string[] = [];
+
+    for (const file of files) {
+      try {
+        // Create a unique filename
+        const timestamp = Date.now();
+        const filename = `reviews/${timestamp}-${file.name}`;
+        const storageRef = ref(storage, filename);
+        
+        // Upload the file
+        await uploadBytes(storageRef, file);
+        
+        // Get the download URL
+        const downloadURL = await getDownloadURL(storageRef);
+        newImages.push(downloadURL);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('Failed to upload image. Please try again.');
+      }
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, ...newImages]
+    }));
+    
+    setUploadingImages(false);
+  };
+
+  const removeImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const reviewData = {
+        ...formData,
+        dateSubmitted: new Date().toISOString()
+      };
+
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reviewData)
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to submit review');
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      alert('There was an error submitting your review. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Thank You!</h3>
+          <p className="text-gray-700 mb-4">
+            Your review has been submitted and is pending approval. 
+            We appreciate your feedback!
+          </p>
+          <p className="text-sm text-gray-900">
+            Reviews are typically approved within 24 hours.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
+      <h3 className="text-xl font-bold text-gray-900 mb-4">Leave a Review</h3>
+      <p className="text-gray-900 mb-6 text-sm">
+        Share your experience with our pool table services
+      </p>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Customer Name */}
+        <div>
+          <label htmlFor="customerName" className="block text-sm font-medium text-gray-900 mb-1">
+            Your Name *
+          </label>
+          <input
+            type="text"
+            id="customerName"
+            name="customerName"
+            required
+            value={formData.customerName}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-800 text-gray-900 caret-black"
+          />
+        </div>
+
+        {/* Email */}
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
+            Email Address *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-800 text-gray-900 caret-black"
+          />
+          <p className="text-xs text-gray-900 mt-1">Your email won't be displayed publicly</p>
+        </div>
+
+        {/* Service Type */}
+        <div>
+          <label htmlFor="service" className="block text-sm font-medium text-gray-900 mb-1">
+            Service Received *
+          </label>
+          <select
+            id="service"
+            name="service"
+            required
+            value={formData.service}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 bg-white caret-black"
+          >
+            <option value="">Select a service</option>
+            {services.map((service) => (
+              <option key={service} value={service}>{service}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Rating */}
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-2">
+            Rating *
+          </label>
+          <div className="flex items-center space-x-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => setFormData(prev => ({ ...prev, rating: star }))}
+                className="focus:outline-none"
+              >
+                <svg 
+                  className={`w-8 h-8 ${star <= formData.rating ? 'text-yellow-400' : 'text-gray-300'} hover:text-yellow-400 transition-colors`} 
+                  fill="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </button>
+            ))}
+            <span className="ml-2 text-sm text-gray-900">
+              ({formData.rating} star{formData.rating !== 1 ? 's' : ''})
+            </span>
+          </div>
+        </div>
+
+        {/* Comment */}
+        <div>
+          <label htmlFor="comment" className="block text-sm font-medium text-gray-900 mb-1">
+            Your Review *
+          </label>
+          <textarea
+            id="comment"
+            name="comment"
+            rows={4}
+            required
+            value={formData.comment}
+            onChange={handleChange}
+            placeholder="Tell us about your experience with our service..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 placeholder-gray-800 text-gray-900 caret-black"
+          />
+        </div>
+
+        {/* Image Upload */}
+        <div>
+          <label className="block text-sm font-medium text-gray-900 mb-1">
+            Photos (Optional)
+          </label>
+          <p className="text-xs text-gray-900 mb-2">Upload photos of your table to help others see your experience</p>
+          
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors">
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="hidden"
+              disabled={uploadingImages}
+            />
+            <label
+              htmlFor="imageUpload"
+              className={`cursor-pointer flex flex-col items-center ${uploadingImages ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <Upload className="w-8 h-8 text-gray-400 mb-2" />
+              <span className="text-sm text-gray-900">
+                {uploadingImages ? 'Uploading...' : 'Click to upload photos'}
+              </span>
+              <span className="text-xs text-gray-800 mt-1">
+                PNG, JPG, GIF up to 10MB each
+              </span>
+            </label>
+          </div>
+
+          {/* Image Previews */}
+          {formData.images.length > 0 && (
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {formData.images.map((image, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={image}
+                    alt={`Upload ${index + 1}`}
+                    className="w-full h-24 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-green-700 text-white px-4 py-3 rounded-lg font-semibold hover:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit Review'}
+        </button>
+        
+        <p className="text-xs text-gray-900 text-center">
+          Reviews are moderated and will appear after approval
+        </p>
+      </form>
+    </div>
+  );
+}
