@@ -6,6 +6,10 @@ import { RFQ } from '@/lib/firebase';
 // GET - Fetch RFQs (admin only)
 export async function GET(request: NextRequest) {
   try {
+    if (!adminDb) {
+      return NextResponse.json([]);
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {
@@ -37,6 +41,10 @@ export async function GET(request: NextRequest) {
 // POST - Submit new RFQ
 export async function POST(request: NextRequest) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const data = await request.json();
     
     // Determine if this is a table-specific RFQ or a service RFQ

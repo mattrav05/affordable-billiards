@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { createDocument } from '@/lib/firebase-admin';
+import { adminDb, createDocument } from '@/lib/firebase-admin';
 import { BlogPost } from '@/lib/firebase';
 
 const initialBlogPosts = [
@@ -121,6 +121,10 @@ Looking for a quality used table? Browse our current inventory or contact us abo
 // POST - Seed initial blog posts (admin only)
 export async function POST(request: NextRequest) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     console.log('Seed route - session:', session?.user?.email);
     

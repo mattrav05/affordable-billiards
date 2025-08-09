@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { updateDocument, deleteDocument, getDocument } from '@/lib/firebase-admin';
+import { adminDb, updateDocument, deleteDocument, getDocument } from '@/lib/firebase-admin';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -9,6 +9,10 @@ interface RouteParams {
 // GET - Get single blog post
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const { id } = await params;
     const session = await getServerSession();
     
@@ -33,6 +37,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // PUT - Update blog post (admin only)
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {
@@ -70,6 +78,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 // DELETE - Delete blog post (admin only)
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {

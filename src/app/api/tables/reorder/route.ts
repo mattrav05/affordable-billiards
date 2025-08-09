@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { updateDocument } from '@/lib/firebase-admin';
+import { adminDb, updateDocument } from '@/lib/firebase-admin';
 
 interface ReorderUpdate {
   id: string;
@@ -10,6 +10,10 @@ interface ReorderUpdate {
 // POST - Reorder tables (admin only)
 export async function POST(request: NextRequest) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {

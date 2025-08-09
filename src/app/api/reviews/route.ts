@@ -6,6 +6,11 @@ import { Review } from '@/lib/firebase';
 // GET - Fetch reviews
 export async function GET(request: NextRequest) {
   try {
+    // Return empty array if Firebase Admin is not initialized
+    if (!adminDb) {
+      return NextResponse.json([]);
+    }
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const session = await getServerSession();
@@ -74,6 +79,11 @@ export async function GET(request: NextRequest) {
 // POST - Submit new review
 export async function POST(request: NextRequest) {
   try {
+    // Return error if Firebase Admin is not initialized
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+
     const data = await request.json();
     
     // Validate required fields

@@ -6,6 +6,10 @@ import { BlogPost } from '@/lib/firebase';
 // GET - Fetch blog posts
 export async function GET(request: NextRequest) {
   try {
+    if (!adminDb) {
+      return NextResponse.json([]);
+    }
+    
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const session = await getServerSession();
@@ -57,6 +61,10 @@ export async function GET(request: NextRequest) {
 // POST - Create new blog post (admin only)
 export async function POST(request: NextRequest) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {

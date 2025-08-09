@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { updateDocument, deleteDocument, getDocument } from '@/lib/firebase-admin';
+import { adminDb, updateDocument, deleteDocument, getDocument } from '@/lib/firebase-admin';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -9,6 +9,10 @@ interface RouteParams {
 // PUT - Update review status (admin only)
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {
@@ -38,6 +42,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 // DELETE - Delete review (admin only)
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {

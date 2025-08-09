@@ -9,6 +9,10 @@ interface RouteParams {
 // GET - Fetch single table
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const { id } = await params;
     const table = await getDocument('tables', id);
     
@@ -26,6 +30,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // PUT - Update table (admin only)
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {
@@ -49,6 +57,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 // DELETE - Delete table (admin only)
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Service temporarily unavailable' }, { status: 503 });
+    }
+    
     const session = await getServerSession();
     
     if (!session?.user?.email) {
