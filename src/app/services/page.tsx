@@ -127,7 +127,7 @@ export default function ServicesPage() {
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">✓</span>
-                    Complete table restoration
+                    Complete assembly service
                   </li>
                 </ul>
                 <Link 
