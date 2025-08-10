@@ -321,16 +321,21 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
           {/* Image Previews */}
           {console.log('About to render previews, uploadedImages:', uploadedImages)}
           {uploadedImages.length > 0 && (
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <>
+            <p className="text-sm text-gray-600 mt-2">Uploaded Images ({uploadedImages.length}):</p>
+            <div className="mt-2 grid grid-cols-2 gap-3" style={{ display: 'grid' }}>
               {console.log('Rendering previews for', uploadedImages.length, 'images')}
               {uploadedImages.map((image, index) => {
                 console.log('Rendering image preview:', index, image);
                 return (
-                <div key={index} className="relative">
+                <div key={index} className="relative bg-gray-100" style={{ position: 'relative', minHeight: '96px', backgroundColor: '#f3f4f6' }}>
                   <img
                     src={image}
                     alt={`Upload ${index + 1}`}
                     className="w-full h-24 object-cover rounded-lg"
+                    style={{ width: '100%', height: '96px', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                    onError={(e) => console.error('Image failed to load:', image)}
+                    onLoad={() => console.log('Image loaded successfully:', image)}
                   />
                   <button
                     type="button"
@@ -343,6 +348,7 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
                 );
               })}
             </div>
+            </>
           )}
         </div>
 
