@@ -320,31 +320,38 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
         </div>
         
         {/* Image Previews - Moved outside the upload div */}
-        {uploadedImages.length > 0 && (
-          <div className="mt-4">
-            <p className="text-sm font-medium text-gray-900 mb-2">Uploaded Images ({uploadedImages.length}):</p>
+        {uploadedImages.length > 0 ? (
+          <div className="mt-4 p-4 border-2 border-green-500 bg-green-50 rounded-lg">
+            <p className="text-lg font-bold text-green-800 mb-3">✓ {uploadedImages.length} Image{uploadedImages.length > 1 ? 's' : ''} Uploaded Successfully!</p>
             <div className="grid grid-cols-2 gap-3">
               {uploadedImages.map((image, index) => (
-                <div key={index} className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ height: '96px' }}>
+                <div key={index} className="relative" style={{ backgroundColor: '#e5e7eb', height: '120px', borderRadius: '8px', overflow: 'hidden' }}>
                   <img
                     src={image}
                     alt={`Upload ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => console.error('Image failed to load:', image)}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      console.error('Image failed to load:', image);
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
                     onLoad={() => console.log('Image loaded successfully:', image)}
                   />
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
+                    style={{ zIndex: 10 }}
                   >
-                    <X className="w-3 h-3" />
+                    ×
                   </button>
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 text-center">
+                    Image {index + 1}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-        )}
+        ) : null}
 
         {/* Submit Button */}
         <button
