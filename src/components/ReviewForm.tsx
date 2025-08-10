@@ -40,8 +40,14 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('handleImageUpload triggered');
     const files = e.target.files;
-    if (!files) return;
+    console.log('Files selected:', files?.length || 0);
+    
+    if (!files || files.length === 0) {
+      console.log('No files selected');
+      return;
+    }
 
     // Check if storage is initialized
     if (!storage) {
@@ -281,15 +287,21 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors">
             <input
               type="file"
-              id="imageUpload"
-              accept="image/*"
+              id="review-image-upload"
+              accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
               multiple
               onChange={handleImageUpload}
               className="hidden"
               disabled={uploadingImages}
             />
-            <label
-              htmlFor="imageUpload"
+            <div
+              onClick={() => {
+                const input = document.getElementById('review-image-upload') as HTMLInputElement;
+                if (input && !uploadingImages) {
+                  console.log('Programmatically clicking file input');
+                  input.click();
+                }
+              }}
               className={`cursor-pointer flex flex-col items-center ${uploadingImages ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <Upload className="w-8 h-8 text-gray-400 mb-2" />
@@ -299,7 +311,7 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
               <span className="text-xs text-gray-800 mt-1">
                 PNG, JPG, GIF up to 10MB each
               </span>
-            </label>
+            </div>
           </div>
 
           {/* Image Previews */}
