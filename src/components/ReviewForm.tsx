@@ -43,32 +43,64 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     const files = e.target.files;
     if (!files) return;
 
+    // Check if storage is initialized
+    if (!storage) {
+      console.error('Firebase Storage is not initialized');
+      alert('Image upload is currently unavailable. Please try again later.');
+      return;
+    }
+
     setUploadingImages(true);
     const newImages: string[] = [];
 
     for (const file of files) {
       try {
+        // Validate file size (10MB max)
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+          continue;
+        }
+
         // Create a unique filename
         const timestamp = Date.now();
-        const filename = `reviews/${timestamp}-${file.name}`;
+        const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const filename = `reviews/${timestamp}-${safeName}`;
+        
+        console.log('Uploading file:', filename);
         const storageRef = ref(storage, filename);
         
         // Upload the file
-        await uploadBytes(storageRef, file);
+        const snapshot = await uploadBytes(storageRef, file);
+        console.log('Upload successful:', snapshot);
         
         // Get the download URL
         const downloadURL = await getDownloadURL(storageRef);
+        console.log('Download URL obtained:', downloadURL);
         newImages.push(downloadURL);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error uploading image:', error);
-        alert('Failed to upload image. Please try again.');
+        console.error('Error details:', error.code, error.message);
+        
+        // More specific error messages
+        if (error.code === 'storage/unauthorized') {
+          alert('You do not have permission to upload images. Please check Firebase Storage rules.');
+        } else if (error.code === 'storage/canceled') {
+          alert('Upload was cancelled.');
+        } else if (error.code === 'storage/unknown') {
+          alert('An unknown error occurred. Please check your internet connection and try again.');
+        } else {
+          alert(`Failed to upload ${file.name}: ${error.message || 'Unknown error'}`);
+        }
       }
     }
 
-    setFormData(prev => ({
-      ...prev,
-      images: [...prev.images, ...newImages]
-    }));
+    if (newImages.length > 0) {
+      setFormData(prev => ({
+        ...prev,
+        images: [...prev.images, ...newImages]
+      }));
+      console.log('Images added to form:', newImages);
+    }
     
     setUploadingImages(false);
   };
