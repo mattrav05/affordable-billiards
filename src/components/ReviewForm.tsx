@@ -317,40 +317,34 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
               </span>
             </div>
           </div>
-
-          {/* Image Previews */}
-          {console.log('About to render previews, uploadedImages:', uploadedImages)}
-          {uploadedImages.length > 0 && (
-            <>
-            <p className="text-sm text-gray-600 mt-2">Uploaded Images ({uploadedImages.length}):</p>
-            <div className="mt-2 grid grid-cols-2 gap-3" style={{ display: 'grid' }}>
-              {console.log('Rendering previews for', uploadedImages.length, 'images')}
-              {uploadedImages.map((image, index) => {
-                console.log('Rendering image preview:', index, image);
-                return (
-                <div key={index} className="relative bg-gray-100" style={{ position: 'relative', minHeight: '96px', backgroundColor: '#f3f4f6' }}>
+        </div>
+        
+        {/* Image Previews - Moved outside the upload div */}
+        {uploadedImages.length > 0 && (
+          <div className="mt-4">
+            <p className="text-sm font-medium text-gray-900 mb-2">Uploaded Images ({uploadedImages.length}):</p>
+            <div className="grid grid-cols-2 gap-3">
+              {uploadedImages.map((image, index) => (
+                <div key={index} className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ height: '96px' }}>
                   <img
                     src={image}
                     alt={`Upload ${index + 1}`}
-                    className="w-full h-24 object-cover rounded-lg"
-                    style={{ width: '100%', height: '96px', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                    className="w-full h-full object-cover"
                     onError={(e) => console.error('Image failed to load:', image)}
                     onLoad={() => console.log('Image loaded successfully:', image)}
                   />
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
                   >
                     <X className="w-3 h-3" />
                   </button>
                 </div>
-                );
-              })}
+              ))}
             </div>
-            </>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Submit Button */}
         <button
