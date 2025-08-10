@@ -245,11 +245,9 @@ export default function ReviewsPage() {
           {/* Desktop: Review Form Sidebar */}
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-24 h-[calc(100vh-8rem)]">
-              <div className="bg-white rounded-lg shadow-lg h-full flex flex-col">
-                <div className="p-6 pb-0">
-                  <h3 className="text-2xl font-bold text-gray-900 text-center">Share Your Experience</h3>
-                </div>
-                <div className="overflow-y-auto flex-1 p-6 pt-2">
+              <div className="bg-white rounded-lg shadow-lg h-full overflow-y-auto">
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-gray-900 text-center mb-4">Share Your Experience</h3>
                   <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
                 </div>
               </div>
