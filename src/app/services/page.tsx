@@ -130,6 +130,19 @@ export default function ServicesPage() {
                     Complete assembly service
                   </li>
                 </ul>
+                
+                {/* Color Chart */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold text-gray-900 mb-3">Felt Color Options</h4>
+                  <img 
+                    src="/color-chart.webp" 
+                    alt="Pool Table Felt Color Chart" 
+                    className="w-full rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+                    onClick={() => window.open('/color-chart.webp', '_blank')}
+                  />
+                  <p className="text-sm text-gray-600 mt-2 text-center">Click to view full size color chart</p>
+                </div>
+                
                 <Link 
                   href="/rfq?service=installation" 
                   className="block bg-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-800 transition-colors"

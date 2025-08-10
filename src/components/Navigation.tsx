@@ -17,7 +17,7 @@ export default function Navigation({ currentPage }: NavigationProps = {}) {
     { href: '/', label: 'Home' },
     { href: '/services', label: 'Services' },
     { href: '/inventory', label: 'Tables for Sale' },
-    { href: '/rfq', label: 'RFQ' },
+    { href: '/rfq', label: 'Request Quote' },
     { href: '/reviews', label: 'Reviews' },
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' }
@@ -93,7 +93,7 @@ export default function Navigation({ currentPage }: NavigationProps = {}) {
                     : 'text-gray-700 hover:text-green-700 hover:bg-green-50'
                 }`}
               >
-                RFQ
+                Quote
               </Link>
               <Link
                 href="/reviews"
