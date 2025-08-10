@@ -125,12 +125,16 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     e.preventDefault();
     setIsSubmitting(true);
 
+    console.log('Submitting review with images:', uploadedImages);
+
     try {
       const reviewData = {
         ...formData,
         images: uploadedImages,
         dateSubmitted: new Date().toISOString()
       };
+      
+      console.log('Review data being sent:', reviewData);
 
       const response = await fetch('/api/reviews', {
         method: 'POST',
@@ -181,6 +185,14 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
       <p className="text-gray-900 mb-6 text-sm">
         Share your experience with our pool table services
       </p>
+      
+      {/* Debug info - TEMPORARY */}
+      <div className="mb-4 p-2 bg-yellow-100 border border-yellow-400 rounded text-xs">
+        <p>Debug: {uploadedImages.length} images in state</p>
+        {uploadedImages.length > 0 && (
+          <p className="truncate">URLs: {uploadedImages.join(', ')}</p>
+        )}
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Customer Name */}
