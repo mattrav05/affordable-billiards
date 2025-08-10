@@ -15,10 +15,10 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     email: '',
     rating: 5,
     service: '',
-    comment: '',
-    images: [] as string[]
+    comment: ''
   });
   
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
@@ -101,10 +101,7 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     }
 
     if (newImages.length > 0) {
-      setFormData(prev => ({
-        ...prev,
-        images: [...prev.images, ...newImages]
-      }));
+      setUploadedImages(prev => [...prev, ...newImages]);
       console.log('Images added to form:', newImages);
     }
     
@@ -112,10 +109,7 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
   };
 
   const removeImage = (index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index)
-    }));
+    setUploadedImages(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -125,6 +119,7 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     try {
       const reviewData = {
         ...formData,
+        images: uploadedImages,
         dateSubmitted: new Date().toISOString()
       };
 
@@ -315,9 +310,9 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
           </div>
 
           {/* Image Previews */}
-          {formData.images.length > 0 && (
+          {uploadedImages.length > 0 && (
             <div className="mt-4 grid grid-cols-2 gap-3">
-              {formData.images.map((image, index) => (
+              {uploadedImages.map((image, index) => (
                 <div key={index} className="relative">
                   <img
                     src={image}
