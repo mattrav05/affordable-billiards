@@ -289,17 +289,20 @@ export default function ReviewsManagement() {
                           {review.images.map((image, imgIndex) => (
                             <div 
                               key={imgIndex}
-                              className="relative cursor-pointer group"
+                              className="cursor-pointer"
                               onClick={() => setSelectedImage(image)}
                             >
                               <img
                                 src={image}
                                 alt={`Review image ${imgIndex + 1}`}
-                                className="w-full h-20 object-cover rounded-lg transition-transform group-hover:scale-105"
+                                className="w-full h-20 object-cover rounded-lg border border-gray-200 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                                style={{ backgroundColor: '#f3f4f6' }}
+                                onError={(e) => {
+                                  console.error('Failed to load image:', image);
+                                  (e.target as HTMLImageElement).style.backgroundColor = '#fecaca';
+                                }}
+                                onLoad={() => console.log('Admin image loaded:', image)}
                               />
-                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center">
-                                <span className="text-white opacity-0 group-hover:opacity-100 text-xs font-medium">View</span>
-                              </div>
                             </div>
                           ))}
                         </div>

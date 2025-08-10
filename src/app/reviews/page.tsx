@@ -215,17 +215,20 @@ export default function ReviewsPage() {
                           {review.images.map((image, imgIndex) => (
                             <div 
                               key={imgIndex}
-                              className="relative cursor-pointer group"
+                              className="cursor-pointer group"
                               onClick={() => setSelectedImage(image)}
                             >
                               <img
                                 src={image}
                                 alt={`Review image ${imgIndex + 1}`}
-                                className="w-full h-24 sm:h-32 object-cover rounded-lg transition-transform group-hover:scale-105"
+                                className="w-full h-24 sm:h-32 object-cover rounded-lg border border-gray-200 hover:border-green-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                                style={{ backgroundColor: '#f3f4f6' }}
+                                onError={(e) => {
+                                  console.error('Failed to load image:', image);
+                                  (e.target as HTMLImageElement).style.backgroundColor = '#fecaca';
+                                }}
+                                onLoad={() => console.log('Image loaded:', image)}
                               />
-                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition-all duration-200 flex items-center justify-center">
-                                <span className="text-white opacity-0 group-hover:opacity-100 text-sm font-medium">Click to enlarge</span>
-                              </div>
                             </div>
                           ))}
                         </div>
