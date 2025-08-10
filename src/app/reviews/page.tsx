@@ -23,6 +23,7 @@ export default function ReviewsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [reviewsPerPage, setReviewsPerPage] = useState(25);
   const [showMobileForm, setShowMobileForm] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
   useEffect(() => {
     const loadReviews = async () => {
@@ -84,7 +85,11 @@ export default function ReviewsPage() {
         <div className="lg:hidden mb-12">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Share Your Experience</h3>
-            <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+            <ReviewForm 
+              onReviewSubmitted={handleReviewSubmitted}
+              uploadedImages={uploadedImages}
+              setUploadedImages={setUploadedImages}
+            />
           </div>
         </div>
 
@@ -248,7 +253,11 @@ export default function ReviewsPage() {
               <div className="bg-white rounded-lg shadow-lg h-full overflow-y-auto">
                 <div className="p-6">
                   <h3 className="text-2xl font-bold text-gray-900 text-center mb-4">Share Your Experience</h3>
-                  <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+                  <ReviewForm 
+                    onReviewSubmitted={handleReviewSubmitted}
+                    uploadedImages={uploadedImages}
+                    setUploadedImages={setUploadedImages}
+                  />
                 </div>
               </div>
             </div>

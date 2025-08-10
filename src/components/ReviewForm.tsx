@@ -7,9 +7,11 @@ import { storage } from '@/lib/firebase';
 
 interface ReviewFormProps {
   onReviewSubmitted?: () => void;
+  uploadedImages?: string[];
+  setUploadedImages?: (images: string[]) => void;
 }
 
-export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
+export default function ReviewForm({ onReviewSubmitted, uploadedImages = [], setUploadedImages }: ReviewFormProps) {
   const [formData, setFormData] = useState({
     customerName: '',
     email: '',
@@ -18,7 +20,6 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     comment: ''
   });
   
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
@@ -105,12 +106,10 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
       }
     }
 
-    if (newImages.length > 0) {
-      setUploadedImages(prev => {
-        const updated = [...prev, ...newImages];
-        console.log('Setting uploadedImages state to:', updated);
-        return updated;
-      });
+    if (newImages.length > 0 && setUploadedImages) {
+      const updated = [...uploadedImages, ...newImages];
+      setUploadedImages(updated);
+      console.log('Setting uploadedImages state to:', updated);
       console.log('Images added to form:', newImages);
     }
     
@@ -118,7 +117,10 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
   };
 
   const removeImage = (index: number) => {
-    setUploadedImages(prev => prev.filter((_, i) => i !== index));
+    if (setUploadedImages) {
+      const updated = uploadedImages.filter((_, i) => i !== index);
+      setUploadedImages(updated);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
