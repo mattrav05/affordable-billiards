@@ -430,22 +430,24 @@ export default function ServicesPage() {
       {/* Color Chart Modal */}
       {showColorChart && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-75 z-50 overflow-y-auto"
           onClick={() => setShowColorChart(false)}
         >
-          <div className="relative max-w-6xl max-h-full">
-            <img
-              src="/color-chart.webp"
-              alt="Pool Table Felt Color Chart - Full Size"
-              className="max-w-full max-h-full object-contain rounded-lg"
-              onClick={(e) => e.stopPropagation()}
-            />
-            <button
-              onClick={() => setShowColorChart(false)}
-              className="absolute top-4 right-4 bg-black bg-opacity-50 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-75 transition-all text-2xl font-bold"
-            >
-              ×
-            </button>
+          <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="relative max-w-7xl w-full">
+              <img
+                src="/color-chart.webp"
+                alt="Pool Table Felt Color Chart - Full Size"
+                className="w-full h-auto rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <button
+                onClick={() => setShowColorChart(false)}
+                className="fixed top-4 right-4 bg-black bg-opacity-75 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-90 transition-all text-2xl font-bold z-10"
+              >
+                ×
+              </button>
+            </div>
           </div>
         </div>
       )}
