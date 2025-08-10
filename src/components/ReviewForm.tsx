@@ -134,7 +134,7 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
+    <div className="bg-white rounded-lg shadow-md p-6">
       <h3 className="text-xl font-bold text-gray-900 mb-4">Leave a Review</h3>
       <p className="text-gray-900 mb-6 text-sm">
         Share your experience with our pool table services

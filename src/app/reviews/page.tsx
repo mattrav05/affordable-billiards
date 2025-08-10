@@ -22,6 +22,7 @@ export default function ReviewsPage() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [reviewsPerPage, setReviewsPerPage] = useState(25);
+  const [showMobileForm, setShowMobileForm] = useState(false);
 
   useEffect(() => {
     const loadReviews = async () => {
@@ -243,10 +244,14 @@ export default function ReviewsPage() {
 
           {/* Desktop: Review Form Sidebar */}
           <div className="hidden lg:block lg:col-span-1">
-            <div className="sticky top-8">
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Share Your Experience</h3>
-                <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+            <div className="sticky top-24 h-[calc(100vh-8rem)]">
+              <div className="bg-white rounded-lg shadow-lg h-full flex flex-col">
+                <div className="p-6 pb-0">
+                  <h3 className="text-2xl font-bold text-gray-900 text-center">Share Your Experience</h3>
+                </div>
+                <div className="overflow-y-auto flex-1 p-6 pt-2">
+                  <ReviewForm onReviewSubmitted={handleReviewSubmitted} />
+                </div>
               </div>
             </div>
           </div>
