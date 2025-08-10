@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Upload, X } from 'lucide-react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/firebase';
@@ -22,6 +22,11 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
+
+  useEffect(() => {
+    console.log('uploadedImages state changed:', uploadedImages);
+    console.log('Number of images:', uploadedImages.length);
+  }, [uploadedImages]);
 
   const services = [
     'Table Moving',
@@ -101,7 +106,11 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
     }
 
     if (newImages.length > 0) {
-      setUploadedImages(prev => [...prev, ...newImages]);
+      setUploadedImages(prev => {
+        const updated = [...prev, ...newImages];
+        console.log('Setting uploadedImages state to:', updated);
+        return updated;
+      });
       console.log('Images added to form:', newImages);
     }
     
@@ -310,9 +319,13 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
           </div>
 
           {/* Image Previews */}
+          {console.log('About to render previews, uploadedImages:', uploadedImages)}
           {uploadedImages.length > 0 && (
             <div className="mt-4 grid grid-cols-2 gap-3">
-              {uploadedImages.map((image, index) => (
+              {console.log('Rendering previews for', uploadedImages.length, 'images')}
+              {uploadedImages.map((image, index) => {
+                console.log('Rendering image preview:', index, image);
+                return (
                 <div key={index} className="relative">
                   <img
                     src={image}
@@ -327,7 +340,8 @@ export default function ReviewForm({ onReviewSubmitted }: ReviewFormProps) {
                     <X className="w-3 h-3" />
                   </button>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
