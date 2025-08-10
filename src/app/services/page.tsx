@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   ShoppingCart, 
   Truck, 
@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 
 export default function ServicesPage() {
+  const [showColorChart, setShowColorChart] = useState(false);
+
   // SEO optimization
   useEffect(() => {
     document.title = 'Pool Table Services Michigan | Buy, Sell, Move, Install | Affordable Billiards';
@@ -130,19 +132,6 @@ export default function ServicesPage() {
                     Complete assembly service
                   </li>
                 </ul>
-                
-                {/* Color Chart */}
-                <div className="mb-6">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-3">Felt Color Options</h4>
-                  <img 
-                    src="/color-chart.webp" 
-                    alt="Pool Table Felt Color Chart" 
-                    className="w-full rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
-                    onClick={() => window.open('/color-chart.webp', '_blank')}
-                  />
-                  <p className="text-sm text-gray-600 mt-2 text-center">Click to view full size color chart</p>
-                </div>
-                
                 <Link 
                   href="/rfq?service=installation" 
                   className="block bg-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-800 transition-colors"
@@ -312,6 +301,25 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Color Chart Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">Pool Table Felt Color Options</h2>
+          <p className="text-xl text-gray-700 mb-8">
+            Choose from our wide selection of premium felt colors for your pool table installation or re-felting service
+          </p>
+          <div className="max-w-4xl mx-auto">
+            <img 
+              src="/color-chart.webp" 
+              alt="Pool Table Felt Color Chart" 
+              className="w-full rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              onClick={() => setShowColorChart(true)}
+            />
+            <p className="text-lg text-gray-600 mt-4">Click to enlarge color chart</p>
+          </div>
+        </div>
+      </section>
+
       {/* Service Areas */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -418,6 +426,29 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* Color Chart Modal */}
+      {showColorChart && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowColorChart(false)}
+        >
+          <div className="relative max-w-6xl max-h-full">
+            <img
+              src="/color-chart.webp"
+              alt="Pool Table Felt Color Chart - Full Size"
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={() => setShowColorChart(false)}
+              className="absolute top-4 right-4 bg-black bg-opacity-50 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-opacity-75 transition-all text-2xl font-bold"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
