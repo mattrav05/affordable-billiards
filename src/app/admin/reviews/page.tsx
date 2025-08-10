@@ -39,6 +39,7 @@ export default function ReviewsManagement() {
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState('');
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -283,15 +284,23 @@ export default function ReviewsManagement() {
                     {/* Review Images */}
                     {review.images && review.images.length > 0 && (
                       <div className="mb-4">
-                        <p className="text-sm text-gray-600 mb-2">Customer Photos:</p>
-                        <div className="grid grid-cols-3 gap-2">
+                        <p className="text-sm font-medium text-gray-900 mb-2">Customer Photos ({review.images.length}):</p>
+                        <div className="grid grid-cols-4 gap-3">
                           {review.images.map((image, imgIndex) => (
-                            <img
+                            <div 
                               key={imgIndex}
-                              src={image}
-                              alt={`Review image ${imgIndex + 1}`}
-                              className="w-full h-20 object-cover rounded-lg"
-                            />
+                              className="relative cursor-pointer group"
+                              onClick={() => setSelectedImage(image)}
+                            >
+                              <img
+                                src={image}
+                                alt={`Review image ${imgIndex + 1}`}
+                                className="w-full h-20 object-cover rounded-lg transition-transform group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center">
+                                <span className="text-white opacity-0 group-hover:opacity-100 text-xs font-medium">View</span>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -408,6 +417,29 @@ export default function ReviewsManagement() {
           </div>
         )}
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-full">
+            <img
+              src={selectedImage}
+              alt="Enlarged review image"
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-75 transition-all"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

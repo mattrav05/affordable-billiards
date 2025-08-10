@@ -188,13 +188,6 @@ export default function ReviewForm({ onReviewSubmitted, uploadedImages = [], set
         Share your experience with our pool table services
       </p>
       
-      {/* Debug info - TEMPORARY */}
-      <div className="mb-4 p-2 bg-yellow-100 border border-yellow-400 rounded text-xs">
-        <p>Debug: {uploadedImages.length} images in state</p>
-        {uploadedImages.length > 0 && (
-          <p className="truncate">URLs: {uploadedImages.join(', ')}</p>
-        )}
-      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Customer Name */}
