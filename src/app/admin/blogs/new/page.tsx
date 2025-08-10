@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, Eye } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Upload, X } from 'lucide-react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '@/lib/firebase';
 
 export default function NewBlogPost() {
   const { data: session, status } = useSession();
@@ -22,6 +24,7 @@ export default function NewBlogPost() {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // Redirect if not authenticated
   if (status === 'loading') {
@@ -48,6 +51,60 @@ export default function NewBlogPost() {
     'Industry News',
     'How-To'
   ];
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Check if storage is initialized
+    if (!storage) {
+      alert('Image upload is currently unavailable. Please try again later.');
+      return;
+    }
+
+    setUploadingImage(true);
+
+    try {
+      // Validate file size (5MB max for blog images)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File is too large. Maximum size is 5MB.');
+        return;
+      }
+
+      // Create a unique filename
+      const timestamp = Date.now();
+      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const filename = `blog/${timestamp}-${safeName}`;
+      
+      const storageRef = ref(storage, filename);
+      
+      // Upload the file
+      await uploadBytes(storageRef, file);
+      
+      // Get the download URL
+      const downloadURL = await getDownloadURL(storageRef);
+      
+      // Update form data with the image URL
+      setFormData(prev => ({
+        ...prev,
+        image: downloadURL
+      }));
+      
+      console.log('Image uploaded successfully:', downloadURL);
+    } catch (error: any) {
+      console.error('Error uploading image:', error);
+      alert(`Failed to upload image: ${error.message || 'Unknown error'}`);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const removeImage = () => {
+    setFormData(prev => ({
+      ...prev,
+      image: ''
+    }));
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -247,18 +304,64 @@ export default function NewBlogPost() {
 
             {/* Featured Image */}
             <div className="mb-6">
-              <label htmlFor="image" className="block text-sm font-medium text-gray-900 mb-2">
-                Featured Image URL
+              <label className="block text-sm font-medium text-gray-900 mb-2">
+                Featured Image
               </label>
-              <input
-                type="url"
-                id="image"
-                name="image"
-                value={formData.image}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder-gray-800 caret-black"
-                placeholder="https://example.com/image.jpg"
-              />
+              
+              {!formData.image ? (
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-400 transition-colors">
+                  <input
+                    type="file"
+                    id="imageUpload"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    disabled={uploadingImage}
+                  />
+                  <label
+                    htmlFor="imageUpload"
+                    className={`cursor-pointer flex flex-col items-center ${uploadingImage ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <Upload className="w-12 h-12 text-gray-400 mb-3" />
+                    <span className="text-sm text-gray-700 font-medium">
+                      {uploadingImage ? 'Uploading...' : 'Click to upload featured image'}
+                    </span>
+                    <span className="text-xs text-gray-500 mt-1">
+                      PNG, JPG, GIF up to 5MB
+                    </span>
+                  </label>
+                </div>
+              ) : (
+                <div className="relative">
+                  <img
+                    src={formData.image}
+                    alt="Featured image"
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={removeImage}
+                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+              
+              {/* Keep the URL input as a fallback option */}
+              <details className="mt-3">
+                <summary className="text-sm text-gray-600 cursor-pointer hover:text-gray-900">
+                  Or enter image URL manually
+                </summary>
+                <input
+                  type="url"
+                  name="image"
+                  value={formData.image}
+                  onChange={handleChange}
+                  className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder-gray-800 caret-black text-sm"
+                  placeholder="https://example.com/image.jpg"
+                />
+              </details>
             </div>
           </div>
 
