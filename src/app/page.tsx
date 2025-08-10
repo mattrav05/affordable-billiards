@@ -126,7 +126,7 @@ export default function Home() {
             </Link>
             <a 
               href="/rfq" 
-              className="bg-green-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors inline-block text-center no-underline"
+              className="border-2 border-green-700 text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-green-700 hover:text-white transition-colors inline-block text-center no-underline"
             >
               Request Quote
             </a>
