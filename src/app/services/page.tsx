@@ -49,9 +49,9 @@ export default function ServicesPage() {
             Buy • Sell • Move • Install • Setup • Delivery
           </p>
           <p className="text-lg text-gray-800 max-w-4xl mx-auto">
-            Michigan's trusted pool table experts with over 10 years of experience. 
-            We handle everything from buying and selling used tables to professional moving, 
-            installation, and precise leveling services throughout Michigan.
+            Michigan's trusted pool table experts with over 20+ years of experience. 
+            We handle everything from professional moving and installation to buying and selling used tables, 
+            plus delivery and repair services throughout Michigan.
           </p>
         </div>
       </section>
@@ -61,46 +61,7 @@ export default function ServicesPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            {/* Buy & Sell Used Tables */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-green-700 p-6 text-white text-center">
-                <ShoppingCart className="w-12 h-12 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold">Buy & Sell Tables</h2>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-black mb-4">Quality Pre-Owned Tables</h3>
-                <ul className="space-y-3 text-gray-800 mb-6">
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
-                    Quality used pool tables in stock
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
-                    All major brands available
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
-                    Thoroughly inspected condition
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
-                    Fair cash offers provided
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
-                    Trade-in options available
-                  </li>
-                </ul>
-                <Link 
-                  href="/rfq?service=buy-sell" 
-                  className="block bg-green-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors"
-                >
-                  Request Buy/Sell Quote
-                </Link>
-              </div>
-            </div>
-
-            {/* Moving & Transport */}
+            {/* 1. Pool Table Moving */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-blue-700 p-6 text-white text-center">
                 <Truck className="w-12 h-12 mx-auto mb-4" />
@@ -139,7 +100,7 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            {/* Installation & Setup */}
+            {/* 2. Installation & Setup */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-purple-700 p-6 text-white text-center">
                 <Settings className="w-12 h-12 mx-auto mb-4" />
@@ -178,7 +139,46 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            {/* Delivery Service */}
+            {/* 3. Buy & Sell Tables */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="bg-green-700 p-6 text-white text-center">
+                <ShoppingCart className="w-12 h-12 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold">Buy & Sell Tables</h2>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-black mb-4">Quality Pre-Owned Tables</h3>
+                <ul className="space-y-3 text-gray-800 mb-6">
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span>
+                    Quality used pool tables in stock
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span>
+                    All major brands available
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span>
+                    Thoroughly inspected condition
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span>
+                    Fair cash offers provided
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-green-600 mr-2">✓</span>
+                    Professional consultation included
+                  </li>
+                </ul>
+                <Link 
+                  href="/rfq?service=buy-sell" 
+                  className="block bg-green-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors"
+                >
+                  Request Buy/Sell Quote
+                </Link>
+              </div>
+            </div>
+
+            {/* 4. Delivery Service */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-orange-600 p-6 text-white text-center">
                 <Home className="w-12 h-12 mx-auto mb-4" />
@@ -217,7 +217,46 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            {/* Appraisal & Consultation */}
+            {/* 5. Repair & Maintenance */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="bg-red-600 p-6 text-white text-center">
+                <Award className="w-12 h-12 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold">Repair & Maintenance</h2>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-black mb-4">Professional Repairs</h3>
+                <ul className="space-y-3 text-gray-800 mb-6">
+                  <li className="flex items-start">
+                    <span className="text-red-600 mr-2">✓</span>
+                    Felt replacement service
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-red-600 mr-2">✓</span>
+                    Cushion and bumper repair
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-red-600 mr-2">✓</span>
+                    Pocket replacement available
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-red-600 mr-2">✓</span>
+                    Table releveling service
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-red-600 mr-2">✓</span>
+                    Hardware replacement service
+                  </li>
+                </ul>
+                <Link 
+                  href="/rfq?service=repair" 
+                  className="block bg-red-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+                >
+                  Request Repair Service
+                </Link>
+              </div>
+            </div>
+
+            {/* 6. Appraisal & Consultation */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-teal-600 p-6 text-white text-center">
                 <DollarSign className="w-12 h-12 mx-auto mb-4" />
@@ -252,45 +291,6 @@ export default function ServicesPage() {
                   className="block bg-teal-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
                 >
                   Get Free Consultation
-                </Link>
-              </div>
-            </div>
-
-            {/* Repair & Maintenance */}
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-red-600 p-6 text-white text-center">
-                <Award className="w-12 h-12 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold">Repair & Maintenance</h2>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-black mb-4">Restoration Services</h3>
-                <ul className="space-y-3 text-gray-800 mb-6">
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
-                    Felt replacement service
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
-                    Cushion and bumper repair
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
-                    Pocket replacement available
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
-                    Table releveling service
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
-                    Wood refinishing available
-                  </li>
-                </ul>
-                <Link 
-                  href="/rfq?service=repair" 
-                  className="block bg-red-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
-                >
-                  Request Repair Service
                 </Link>
               </div>
             </div>
@@ -350,7 +350,7 @@ export default function ServicesPage() {
               <ul className="space-y-4 text-gray-800">
                 <li className="flex items-start">
                   <span className="text-green-600 mr-2 mt-1">✓</span>
-                  <span><strong>10+ Years Experience:</strong> Michigan's trusted pool table experts</span>
+                  <span><strong>20+ Years Experience:</strong> Michigan's trusted pool table experts</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-green-600 mr-2 mt-1">✓</span>
