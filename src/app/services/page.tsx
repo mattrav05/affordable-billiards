@@ -66,10 +66,6 @@ export default function ServicesPage() {
             {/* 1. Pool Table Moving */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-yellow-500 p-6 text-white text-center relative">
-                {/* Billiard Ball 1 */}
-                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-yellow-600">
-                  <span className="text-yellow-600 font-bold text-lg">1</span>
-                </div>
                 <Truck className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Pool Table Moving</h2>
               </div>
@@ -109,10 +105,6 @@ export default function ServicesPage() {
             {/* 2. Installation & Setup */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-blue-600 p-6 text-white text-center relative">
-                {/* Billiard Ball 2 */}
-                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-blue-700">
-                  <span className="text-blue-700 font-bold text-lg">2</span>
-                </div>
                 <Settings className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Installation & Setup</h2>
               </div>
@@ -152,10 +144,6 @@ export default function ServicesPage() {
             {/* 3. Buy & Sell Tables */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-red-600 p-6 text-white text-center relative">
-                {/* Billiard Ball 3 */}
-                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-red-700">
-                  <span className="text-red-700 font-bold text-lg">3</span>
-                </div>
                 <ShoppingCart className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Buy & Sell Tables</h2>
               </div>
@@ -195,10 +183,6 @@ export default function ServicesPage() {
             {/* 4. Delivery Service */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-purple-700 p-6 text-white text-center relative">
-                {/* Billiard Ball 4 */}
-                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-purple-800">
-                  <span className="text-purple-800 font-bold text-lg">4</span>
-                </div>
                 <Home className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Delivery Service</h2>
               </div>
@@ -238,10 +222,6 @@ export default function ServicesPage() {
             {/* 5. Repair & Maintenance */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-orange-600 p-6 text-white text-center relative">
-                {/* Billiard Ball 5 */}
-                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-orange-700">
-                  <span className="text-orange-700 font-bold text-lg">5</span>
-                </div>
                 <Award className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Repair & Maintenance</h2>
               </div>
@@ -281,10 +261,6 @@ export default function ServicesPage() {
             {/* 6. Appraisal & Consultation */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="bg-green-700 p-6 text-white text-center relative">
-                {/* Billiard Ball 6 */}
-                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-green-800">
-                  <span className="text-green-800 font-bold text-lg">6</span>
-                </div>
                 <DollarSign className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Appraisal & Consultation</h2>
               </div>
