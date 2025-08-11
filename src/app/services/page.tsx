@@ -65,7 +65,11 @@ export default function ServicesPage() {
             
             {/* 1. Pool Table Moving */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-blue-700 p-6 text-white text-center">
+              <div className="bg-yellow-500 p-6 text-white text-center relative">
+                {/* Billiard Ball 1 */}
+                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-yellow-600">
+                  <span className="text-yellow-600 font-bold text-lg">1</span>
+                </div>
                 <Truck className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Pool Table Moving</h2>
               </div>
@@ -73,29 +77,29 @@ export default function ServicesPage() {
                 <h3 className="text-xl font-bold text-black mb-4">Expert Transportation</h3>
                 <ul className="space-y-3 text-gray-800 mb-6">
                   <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
+                    <span className="text-yellow-600 mr-2">✓</span>
                     Professional disassembly service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
+                    <span className="text-yellow-600 mr-2">✓</span>
                     Safe transport with equipment
                   </li>
                   <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
+                    <span className="text-yellow-600 mr-2">✓</span>
                     Local and long-distance moves
                   </li>
                   <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
+                    <span className="text-yellow-600 mr-2">✓</span>
                     Fully insured service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">✓</span>
+                    <span className="text-yellow-600 mr-2">✓</span>
                     Same-day service available
                   </li>
                 </ul>
                 <Link 
                   href="/rfq?service=moving" 
-                  className="block bg-blue-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors"
+                  className="block bg-yellow-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors"
                 >
                   Get Moving Quote
                 </Link>
@@ -104,7 +108,11 @@ export default function ServicesPage() {
 
             {/* 2. Installation & Setup */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-purple-700 p-6 text-white text-center">
+              <div className="bg-blue-600 p-6 text-white text-center relative">
+                {/* Billiard Ball 2 */}
+                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-blue-700">
+                  <span className="text-blue-700 font-bold text-lg">2</span>
+                </div>
                 <Settings className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Installation & Setup</h2>
               </div>
@@ -112,29 +120,29 @@ export default function ServicesPage() {
                 <h3 className="text-xl font-bold text-black mb-4">Professional Assembly</h3>
                 <ul className="space-y-3 text-gray-800 mb-6">
                   <li className="flex items-start">
-                    <span className="text-purple-600 mr-2">✓</span>
+                    <span className="text-blue-600 mr-2">✓</span>
                     Precision leveling for perfect play
                   </li>
                   <li className="flex items-start">
-                    <span className="text-purple-600 mr-2">✓</span>
+                    <span className="text-blue-600 mr-2">✓</span>
                     New felt installation service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-purple-600 mr-2">✓</span>
+                    <span className="text-blue-600 mr-2">✓</span>
                     Pocket liner replacement
                   </li>
                   <li className="flex items-start">
-                    <span className="text-purple-600 mr-2">✓</span>
+                    <span className="text-blue-600 mr-2">✓</span>
                     Bumper cushion replacement
                   </li>
                   <li className="flex items-start">
-                    <span className="text-purple-600 mr-2">✓</span>
+                    <span className="text-blue-600 mr-2">✓</span>
                     Complete assembly service
                   </li>
                 </ul>
                 <Link 
                   href="/rfq?service=installation" 
-                  className="block bg-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-800 transition-colors"
+                  className="block bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                 >
                   Schedule Installation
                 </Link>
@@ -143,7 +151,11 @@ export default function ServicesPage() {
 
             {/* 3. Buy & Sell Tables */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-green-700 p-6 text-white text-center">
+              <div className="bg-red-600 p-6 text-white text-center relative">
+                {/* Billiard Ball 3 */}
+                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-red-700">
+                  <span className="text-red-700 font-bold text-lg">3</span>
+                </div>
                 <ShoppingCart className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Buy & Sell Tables</h2>
               </div>
@@ -151,29 +163,29 @@ export default function ServicesPage() {
                 <h3 className="text-xl font-bold text-black mb-4">Quality Pre-Owned Tables</h3>
                 <ul className="space-y-3 text-gray-800 mb-6">
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <span className="text-red-600 mr-2">✓</span>
                     Quality used pool tables in stock
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <span className="text-red-600 mr-2">✓</span>
                     All major brands available
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <span className="text-red-600 mr-2">✓</span>
                     Thoroughly inspected condition
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <span className="text-red-600 mr-2">✓</span>
                     Fair cash offers provided
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <span className="text-red-600 mr-2">✓</span>
                     Professional consultation included
                   </li>
                 </ul>
                 <Link 
                   href="/rfq?service=buy-sell" 
-                  className="block bg-green-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors"
+                  className="block bg-red-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
                 >
                   Request Buy/Sell Quote
                 </Link>
@@ -182,7 +194,11 @@ export default function ServicesPage() {
 
             {/* 4. Delivery Service */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-orange-600 p-6 text-white text-center">
+              <div className="bg-purple-700 p-6 text-white text-center relative">
+                {/* Billiard Ball 4 */}
+                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-purple-800">
+                  <span className="text-purple-800 font-bold text-lg">4</span>
+                </div>
                 <Home className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Delivery Service</h2>
               </div>
@@ -190,29 +206,29 @@ export default function ServicesPage() {
                 <h3 className="text-xl font-bold text-black mb-4">Convenient Delivery</h3>
                 <ul className="space-y-3 text-gray-800 mb-6">
                   <li className="flex items-start">
-                    <span className="text-orange-600 mr-2">✓</span>
+                    <span className="text-purple-600 mr-2">✓</span>
                     Scheduled delivery service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-orange-600 mr-2">✓</span>
+                    <span className="text-purple-600 mr-2">✓</span>
                     White glove service available
                   </li>
                   <li className="flex items-start">
-                    <span className="text-orange-600 mr-2">✓</span>
+                    <span className="text-purple-600 mr-2">✓</span>
                     Basement and upstairs access
                   </li>
                   <li className="flex items-start">
-                    <span className="text-orange-600 mr-2">✓</span>
+                    <span className="text-purple-600 mr-2">✓</span>
                     Flexible scheduling options
                   </li>
                   <li className="flex items-start">
-                    <span className="text-orange-600 mr-2">✓</span>
+                    <span className="text-purple-600 mr-2">✓</span>
                     Professional handling guaranteed
                   </li>
                 </ul>
                 <Link 
                   href="/rfq?service=delivery" 
-                  className="block bg-orange-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors"
+                  className="block bg-purple-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-800 transition-colors"
                 >
                   Schedule Delivery
                 </Link>
@@ -221,7 +237,11 @@ export default function ServicesPage() {
 
             {/* 5. Repair & Maintenance */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-red-600 p-6 text-white text-center">
+              <div className="bg-orange-600 p-6 text-white text-center relative">
+                {/* Billiard Ball 5 */}
+                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-orange-700">
+                  <span className="text-orange-700 font-bold text-lg">5</span>
+                </div>
                 <Award className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Repair & Maintenance</h2>
               </div>
@@ -229,29 +249,29 @@ export default function ServicesPage() {
                 <h3 className="text-xl font-bold text-black mb-4">Professional Repairs</h3>
                 <ul className="space-y-3 text-gray-800 mb-6">
                   <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
+                    <span className="text-orange-600 mr-2">✓</span>
                     Felt replacement service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
+                    <span className="text-orange-600 mr-2">✓</span>
                     Cushion and bumper repair
                   </li>
                   <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
+                    <span className="text-orange-600 mr-2">✓</span>
                     Pocket replacement available
                   </li>
                   <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
+                    <span className="text-orange-600 mr-2">✓</span>
                     Table releveling service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-red-600 mr-2">✓</span>
+                    <span className="text-orange-600 mr-2">✓</span>
                     Hardware replacement service
                   </li>
                 </ul>
                 <Link 
                   href="/rfq?service=repair" 
-                  className="block bg-red-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+                  className="block bg-orange-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors"
                 >
                   Request Repair Service
                 </Link>
@@ -260,7 +280,11 @@ export default function ServicesPage() {
 
             {/* 6. Appraisal & Consultation */}
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="bg-teal-600 p-6 text-white text-center">
+              <div className="bg-green-700 p-6 text-white text-center relative">
+                {/* Billiard Ball 6 */}
+                <div className="absolute top-3 right-3 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-green-800">
+                  <span className="text-green-800 font-bold text-lg">6</span>
+                </div>
                 <DollarSign className="w-12 h-12 mx-auto mb-4" />
                 <h2 className="text-2xl font-bold">Appraisal & Consultation</h2>
               </div>
@@ -268,29 +292,29 @@ export default function ServicesPage() {
                 <h3 className="text-xl font-bold text-black mb-4">Expert Evaluation</h3>
                 <ul className="space-y-3 text-gray-800 mb-6">
                   <li className="flex items-start">
-                    <span className="text-teal-600 mr-2">✓</span>
+                    <span className="text-green-600 mr-2">✓</span>
                     Professional table appraisals
                   </li>
                   <li className="flex items-start">
-                    <span className="text-teal-600 mr-2">✓</span>
+                    <span className="text-green-600 mr-2">✓</span>
                     Insurance claim assistance
                   </li>
                   <li className="flex items-start">
-                    <span className="text-teal-600 mr-2">✓</span>
+                    <span className="text-green-600 mr-2">✓</span>
                     Expert buying consultation
                   </li>
                   <li className="flex items-start">
-                    <span className="text-teal-600 mr-2">✓</span>
+                    <span className="text-green-600 mr-2">✓</span>
                     Room measurement service
                   </li>
                   <li className="flex items-start">
-                    <span className="text-teal-600 mr-2">✓</span>
+                    <span className="text-green-600 mr-2">✓</span>
                     Free estimates provided
                   </li>
                 </ul>
                 <Link 
                   href="/rfq?service=consultation" 
-                  className="block bg-teal-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
+                  className="block bg-green-700 text-white text-center py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors"
                 >
                   Get Free Consultation
                 </Link>
